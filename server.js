@@ -1,22 +1,25 @@
+
 require('dotenv').config();
 const express = require('express');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 const path = require("path")
 
-const app = express();
+
+ app = express();
 app.use(cors());
 app.use(express.json());
 
 // Configure transporter (Gmail example)
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
 });
-
 // Health route
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"))
