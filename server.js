@@ -43,6 +43,13 @@ app.get('/auth/callback', async (req, res) => {
   try {
     const { tokens } = await oauth2Client.getToken(code);
     req.session.tokens = tokens;
+
+    // Get user email
+    oauth2Client.setCredentials(tokens);
+    const oauth2 = google.oauth2({ version: 'v2', auth: oauth2Client });
+    const { data } = await oauth2.userinfo.get();
+    req.session.userEmail = data.email;
+
     res.redirect('/');
   } catch (error) {
     res.status(500).json({ message: 'Auth failed', error });
@@ -52,7 +59,7 @@ app.get('/auth/callback', async (req, res) => {
 // Check if user is logged in
 app.get('/auth/status', (req, res) => {
   if (req.session.tokens) {
-    res.json({ loggedIn: true });
+    res.json({ loggedIn: true, email: req.session.userEmail || '' });
   } else {
     res.json({ loggedIn: false });
   }
