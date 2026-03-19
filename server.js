@@ -77,7 +77,7 @@ app.post('/send-email', async (req, res) => {
     return res.status(401).json({ message: 'Not authenticated. Please login with Google first.' });
   }
 
-  const { to, subject, text } = req.body;
+  const { to, subject, html } = req.body;
 
   if (!to || !subject || !text) {
     return res.status(400).json({ message: 'All fields are required' });
@@ -89,12 +89,13 @@ app.post('/send-email', async (req, res) => {
 
     // Build the raw email
     const emailLines = [
-      `To: ${to}`,
-      `Subject: ${subject}`,
-      'Content-Type: text/plain; charset=utf-8',
-      '',
-      text,
-    ];
+  `To: ${to}`,
+  `Subject: ${subject}`,
+  'MIME-Version: 1.0',
+  'Content-Type: text/html; charset=utf-8',
+  '',
+  html,
+];
     const email = emailLines.join('\n');
     const encodedEmail = Buffer.from(email).toString('base64').replace(/\+/g, '-').replace(/\//g, '_');
 
