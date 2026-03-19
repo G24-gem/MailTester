@@ -79,7 +79,7 @@ app.post('/send-email', async (req, res) => {
 
   const { to, subject, html } = req.body;
 
-  if (!to || !subject || !text) {
+  if (!to || !subject || !html) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
