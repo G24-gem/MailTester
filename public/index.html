@@ -1,75 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Email Sender</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .container {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 300px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    input, textarea, button {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 8px;
-    }
-    button {
-      background: black;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h3>Send Email</h3>
-    <input type="email" id="to" placeholder="Recipient email" />
-    <input type="text" id="subject" placeholder="Subject" />
-    <textarea id="text" placeholder="Message"></textarea>
-    <button onclick="sendEmail()">Send</button>
-    <p id="status"></p>
-  </div>
 
-  <script>
-    async function sendEmail() {
-      const to = document.getElementById('to').value;
-      const subject = document.getElementById('subject').value;
-      const text = document.getElementById('text').value;
-
-      const status = document.getElementById('status');
-      status.innerText = 'Sending...';
-
-      try {
-        const res = await fetch('/send-email', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ to, subject, text })
-        });
-
-        const data = await res.json();
-        status.innerText = data.message || 'Done';
-      } catch (err) {
-        status.innerText = 'Error sending email';
-      }
-    }
-  </script>
-</body>
-</html>OCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -141,7 +70,7 @@
       <p id="logged-in-msg" style="color:green; font-size:13px;"></p>
       <input type="email" id="to" placeholder="Recipient email" />
       <input type="text" id="subject" placeholder="Subject" />
-      <textarea id="html" placeholder="Write HTML e.g. <h1>Hello</h1>"></textarea>>
+      <textarea id="html" placeholder="Write HTML e.g. <h1>Hello</h1>"></textarea>
       <button onclick="sendEmail()">Send</button>
       <button id="logout-btn" onclick="logout()">Logout</button>
       <p id="status"></p>
