@@ -3,20 +3,15 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const { google } = require('googleapis');
-const session = require('express-session');
+const cookieSession = require('cookie-session');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(session({
+app.use(cookieSession({
+  name: 'session',
   secret: process.env.SESSION_SECRET || 'mailtester-secret',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: false,
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-  }
+  maxAge: 24 * 60 * 60 * 1000
 }));
 
 // OAuth2 Client Setup
