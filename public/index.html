@@ -182,7 +182,7 @@
     async function sendEmail() {
       const to = document.getElementById('to').value;
       const subject = document.getElementById('subject').value;
-      const text = document.getElementById('text').value;
+      const html = document.getElementById('html').value;
       const status = document.getElementById('status');
       status.innerText = 'Sending...';
 
@@ -190,7 +190,7 @@
         const res = await fetch('/send-email', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ to, subject, text })
+          body: JSON.stringify({ to, subject, html })
         });
 
         const data = await res.json();
